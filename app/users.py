@@ -5,6 +5,8 @@ app = FastAPI()
 ## uvicorn app.users:app --reload
 ##  http://127.0.0.1:8000 
 
+##  {"id": 4, "name":"jonathan", "surname":"Zurita", "age":35, "url":"https://jonathan.dev"}
+
 @app.get("/")
 async def root():
     return {"message": "API de usuarios funcionando"}
@@ -52,9 +54,49 @@ async def user_query(id: int):
     return search_user(id)
 
 
+
+@app.post("/user/", response_model=User)
+async def user_post(user: User):
+    if type(search_user(user.id)) == User:
+        return {"error": "El usuario ya existe"}
+
+    users_list.append(user)
+    return user
+
+@app.put("/user/")
+async def user_put(user: User):
+
+    found = False
+
+    for index, saved_user in enumerate(users_list):
+        if saved_user.id == user.id:
+            users_list[index] = user
+            found = True
+
+    if not found:
+        return {"error": "No se ha actualizado el usuario"}
+
+    return user
+
+
+@app.delete("/user/{id}")
+async def user_delete(id: int):
+
+    found = False
+
+    for index, saved_user in enumerate(users_list):
+        if saved_user.id == id:
+            del users_list[index]
+            found = True
+
+    if not found:
+        return {"error": "No se ha eliminado el usuario"}
+
+
 def search_user(id: int):
     users = filter(lambda user: user.id == id, users_list)
     try:
         return list(users)[0]
     except:
         return {"error": "No se ha encontrado el usuario"}
+    
