@@ -42,18 +42,27 @@ async def users():
 
 @router.get("/user/{id}")  # Path
 async def user(id: int):
-    return search_user(id)
+    user_found = search_user(id)
+    if not isinstance(user_found, User):
+        return {"error": "Usuario no encontrado"}
+    return user_found
 
 
 
 # Endpoint alternativo para /userquery
 @router.get("/userquery")
 async def user_query_alt(id: int):
-    return search_user(id)
+    user_found = search_user(id)
+    if not isinstance(user_found, User):
+        return {"error": "Usuario no encontrado"}
+    return user_found
 
 @router.get("/user/")  # Query
 async def user_query(id: int):
-    return search_user(id)
+    user_found = search_user(id)
+    if not isinstance(user_found, User):
+        return {"error": "Usuario no encontrado"}
+    return user_found
 
 
 
@@ -98,6 +107,10 @@ async def user_delete(id: int):
 def search_user(id: int):
     users = filter(lambda user: user.id == id, users_list)
     try:
+        user = next(users)
+        return user
+    except StopIteration:
+        return None
         return list(users)[0]
     except:
         return {"error": "No se ha encontrado el usuario"}

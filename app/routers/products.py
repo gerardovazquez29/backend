@@ -13,9 +13,9 @@ router = APIRouter(
     }
 )
 
-@router.get("/")
-async def root():
-    return {"message": "API de productos funcionando"}
+#@router.get("/")
+#async def root():
+#    return {"message": "API de productos funcionando"}
 
 products_list = ["Producto 1","Producto 2", "Producto 3", "Producto 4", "Producto 5"]
 
@@ -26,6 +26,8 @@ async def products():
 
 @router.get("/{id}")
 async def product(id: int):
+    if id < 0 or id >= len(products_list):
+        return {"error": "Producto no encontrado"}
     return products_list[id]
 
 
