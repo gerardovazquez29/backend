@@ -1,14 +1,15 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-app = FastAPI()
+
+router = APIRouter()
 
 ## uvicorn app.users:app --reload
 ##  http://127.0.0.1:8000 
 
 ##  {"id": 4, "name":"jonathan", "surname":"Zurita", "age":35, "url":"https://jonathan.dev"}
 
-@app.get("/")
+@router.get("/")
 async def root():
     return {"message": "API de usuarios funcionando"}
 
@@ -28,35 +29,35 @@ users_list = [
         
         
 
-@app.get("/usersjson")
+@router.get("/usersjson")
 async def usersjson():
     return [{"name": "Gerardo", "surname": "Vazquez","age":44, "url": "https://gerardo.dev"},
             {"name": "Santiago", "surname": "Tovar","age":40, "url": "https://santiago.com"},
             {"name": "Jonathan", "surname": "Zurita","age":35, "url": "https://jonathan.dev"}]
- 
-@app.get("/users")
+
+@router.get("/users")
 async def users():
     return users_list
 
 
-@app.get("/user/{id}")  # Path
+@router.get("/user/{id}")  # Path
 async def user(id: int):
     return search_user(id)
 
 
 
 # Endpoint alternativo para /userquery
-@app.get("/userquery")
+@router.get("/userquery")
 async def user_query_alt(id: int):
     return search_user(id)
 
-@app.get("/user/")  # Query
+@router.get("/user/")  # Query
 async def user_query(id: int):
     return search_user(id)
 
 
 
-@app.post("/user/", response_model=User, status_code=201)
+@router.post("/user/", response_model=User, status_code=201)
 async def user_post(user: User):
     if type(search_user(user.id)) == User:
         raise HTTPException(status_code=400, detail="El usuario ya existe")
@@ -64,7 +65,7 @@ async def user_post(user: User):
     users_list.append(user)
     return user
 
-@app.put("/user/")
+@router.put("/user/")
 async def user_put(user: User):
 
     found = False
@@ -80,7 +81,7 @@ async def user_put(user: User):
     return user
 
 
-@app.delete("/user/{id}")
+@router.delete("/user/{id}")
 async def user_delete(id: int):
 
     found = False
@@ -100,4 +101,5 @@ def search_user(id: int):
         return list(users)[0]
     except:
         return {"error": "No se ha encontrado el usuario"}
-    
+    finally:
+        pass
