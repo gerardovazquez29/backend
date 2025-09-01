@@ -13,7 +13,10 @@ app.include_router(users.router)
 app.include_router(basic_auth_users.router)
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+
 # uvicorn app.main:app --reload
+
 ##  http://127.0.0.1:8000 
 
 ## http://127.0.0.1:8000/static/images/python.jpg
