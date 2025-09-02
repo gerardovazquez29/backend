@@ -34,14 +34,14 @@ user_db = {
         "full_name": "gerardo vazquez",
         "email": "gerardo@vazquez.com",
         "disabled": False,
-        "password": "2a$12$B2Gq.Dps1WYf2t57eiIKjO4DXC3IUMUXISJF62bSRiFfqMdOI2Xa6"
+        "password": "$2a$12$rMinqqQkvpwplfGFYjP8peTVaKsLwIW3V6mQDKGCYay0MZnob.ZtC"
     },
     "santi": {
         "username": "santi",
         "full_name": "Santiago",
         "email": "santi@tovar.com",
         "disabled": True,
-        "password": "$2a$12$SduE7dE.i3/ygwd0Kol8bOFvEABaoOOlC8JsCSr6wpwB4zl5STU4S"
+        "password": "$2a$12$UZGXpOtx9FptWMDR1H2fEundq.gHXLK5qRiPF2h5elESE/AK7SRCO"
     }
 }
 
