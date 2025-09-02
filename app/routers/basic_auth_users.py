@@ -1,8 +1,12 @@
-from fastapi import Depends, FastAPI, HTTPException, status, APIRouter
+from fastapi import Depends, HTTPException, status, APIRouter
 from pydantic import BaseModel
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/basicauth",
+    tags=["Basicauth"],
+    responses={status.HTTP_404_NOT_FOUND: {"message": "No encontrado"}}
+)
 
 oauth2 = OAuth2PasswordBearer(tokenUrl="login")
 
