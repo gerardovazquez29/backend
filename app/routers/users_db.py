@@ -11,6 +11,15 @@ router = APIRouter(
     tags=["userdb"],
     responses={status.HTTP_404_NOT_FOUND: {"message": "No encontrado"}})
 
+##  http://127.0.0.1:8000/userdb
+##  {"username": "jonathan", "email":"jonathandev@vazquez.com"}
+"""
+{
+  "id": "68b7877e5db479de0179977d",
+  "username": "jonathan",
+  "email": "jonathandev@vazquez.com"
+}
+"""
 
 @router.get("/", response_model=list[User])
 async def users():
